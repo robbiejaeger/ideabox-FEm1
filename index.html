@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>Ideabox</title>
@@ -11,10 +13,12 @@
     <header class="idea-input-container">
       <h1><span class="colored-text">idea</span>box</h1>
 
-      <input id="title-input" class="user-input" type="text" placeholder="Title">
-      <input id="body-input" class="user-input" type="text" placeholder="Body">
+      <form class="idea-form">
+        <input id="title-input" class="user-input" type="text" placeholder="Title">
+        <input id="body-input" class="user-input" type="text" placeholder="Body">
 
-      <button id="save-btn" class="save-btn" type="button">Save</button>
+        <input id="save-btn" class="save-btn" type="submit" value="save">
+      </form>
     </header>
 
     <section class="ideas-container">
