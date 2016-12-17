@@ -11,24 +11,27 @@ $(document).on('keyup', function(e){
 
 $saveBtn.on('click', function(e){
   e.preventDefault()
-  var inputText = getUserInput()
-  $ideasContainer.append(ideaTemplate(inputText))
+  var idea = constructIdeaFromUserInput()
+  $ideasContainer.append(ideaTemplate(idea))
   clearInputs()
 })
 
-function getUserInput(){
-  return {title: $titleInput.val(), body: $bodyInput.val()}
+function constructIdeaFromUserInput(){
+  return {title: $titleInput.val(),
+          body: $bodyInput.val(),
+          quality: 0,
+          id: Date.now()}
 }
 
-function ideaTemplate(inputText){
-  return `<article class="idea">
-    <h2>${inputText.title}</h2>
+function ideaTemplate(idea){
+  return `<article class="idea" data-id="${idea.id}">
+    <h2>${idea.title}</h2>
     <input class="delete-btn" type="button">
-    <p class="idea-body">${inputText.body}</p>
+    <p class="idea-body">${idea.body}</p>
     <input class="vote-btn upvote-btn" type="button">
     <input class="vote-btn downvote-btn" type="button">
-    <p class="idea-quality" data-quality="0">
-      quality: <span class="quality-val-text">${ideaQualities[0]}</span>
+    <p class="idea-quality" data-quality="${idea.quality}">
+      quality: <span class="quality-val-text">${ideaQualities[idea.quality]}</span>
     </p>
     <hr class="idea-divider">
   </article>`
