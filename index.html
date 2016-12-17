@@ -14,7 +14,7 @@
       <h1><span class="colored-text">idea</span>box</h1>
 
       <form class="idea-form">
-        <input id="title-input" class="user-input form-input" type="text" placeholder="Title">
+        <input id="title-input" class="user-input form-input" type="text" placeholder="Title" maxlength="40">
         <input id="body-input" class="user-input form-input" type="text" placeholder="Body">
 
         <input id="save-btn" class="save-btn form-input" type="submit" value="save">
@@ -37,22 +37,9 @@
         </p>
         <hr class="idea-divider">
       </article>
-
-      <article class="idea">
-        <h2>Title of the Idea</h2>
-        <input class="delete-btn" type="button">
-        <p class="idea-body">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-        <input class="vote-btn upvote-btn" type="button">
-        <input class="vote-btn downvote-btn" type="button">
-        <p class="idea-quality">
-          quality: swill
-        </p>
-        <hr class="idea-divider">
-      </article>
     </section>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>
