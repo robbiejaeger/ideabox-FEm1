@@ -1,5 +1,6 @@
 var $titleInput = $('#title-input')
 var $bodyInput = $('#body-input')
+var $allInputs = $('#title-input, #body-input')
 var $saveBtn = $('#save-btn')
 var $ideasContainer = $('.ideas-container')
 var ideaQualities = ['swill', 'plausible', 'genius']
@@ -33,6 +34,14 @@ function clearInputs(){
   $titleInput.val('')
   $bodyInput.val('')
 }
+
+$allInputs.on('keyup', function(){
+  if ($titleInput.val() !== "" && $bodyInput.val() !== "") {
+    $saveBtn.prop('disabled', false)
+  } else {
+    $saveBtn.prop('disabled', true)
+  }
+})
 
 $ideasContainer.on('click', '.delete-btn', function(){
   $(this).parents('.idea').remove()
