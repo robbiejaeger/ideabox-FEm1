@@ -26,7 +26,7 @@ h1 {
   color: #00A79D;
 }
 
-input, button {
+.form-input {
   display: block;
   height: 35px;
   font-size: 1.2em;
@@ -58,4 +58,21 @@ input, button {
 
 #search-input {
   margin-top: 20px;
+}
+
+h2 {
+  display: inline-block;
+}
+
+.delete-btn {
+  background: url('../img/delete.svg') no-repeat;
+  border: none;
+  display: inline-block;
+  float: right;
+  height: 25px;
+  width: 25px;
+}
+
+.delete-btn:hover {
+  background: url('../img/delete-hover.svg') no-repeat;
 }
