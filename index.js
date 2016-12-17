@@ -5,6 +5,10 @@ var $saveBtn = $('#save-btn')
 var $ideasContainer = $('.ideas-container')
 var ideaQualities = ['swill', 'plausible', 'genius']
 
+$(document).on('keyup', function(e){
+  if (e.keycode === 13) $saveBtn.click()
+})
+
 $saveBtn.on('click', function(e){
   e.preventDefault()
   var inputText = getUserInput()
