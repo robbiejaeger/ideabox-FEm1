@@ -5,6 +5,23 @@ var $saveBtn = $('#save-btn')
 var $ideasContainer = $('.ideas-container')
 var ideaQualities = ['swill', 'plausible', 'genius']
 
+initializeIdeas()
+
+function initializeIdeas(){
+  var ideas = JSON.parse(localStorage.getItem('ideas'))
+  if (ideas === null) {
+    localStorage.setItem('ideas', "[]")
+  } else {
+    loadIdeasFromStorage(ideas)
+  }
+}
+
+function loadIdeasFromStorage(ideas) {
+  ideas.forEach(function(idea){
+    $ideasContainer.append(ideaTemplate(idea))
+  })
+}
+
 $(document).on('keyup', function(e){
   if (e.keycode === 13) $saveBtn.click()
 })
