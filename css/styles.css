@@ -57,11 +57,15 @@ h1 {
 }
 
 #search-input {
-  margin-top: 20px;
+  margin: 20px 0 15px 0;
 }
 
 h2 {
+  color: #6D6E71;
+  font-size: 1.2em;
+  font-weight: 700;
   display: inline-block;
+  margin: 15px 0;
 }
 
 .delete-btn {
@@ -71,8 +75,50 @@ h2 {
   float: right;
   height: 25px;
   width: 25px;
+  margin-top: 15px;
 }
 
 .delete-btn:hover {
   background: url('../img/delete-hover.svg') no-repeat;
+}
+
+.vote-btn {
+  border: none;
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  padding-bottom: 7px;
+}
+
+.upvote-btn {
+  background: url('../img/upvote.svg') no-repeat;
+}
+
+.upvote-btn:hover {
+  background: url('../img/upvote-hover.svg') no-repeat;
+}
+
+.downvote-btn {
+  background: url('../img/downvote.svg') no-repeat;
+}
+
+.downvote-btn:hover {
+  background: url('../img/downvote-hover.svg') no-repeat;
+}
+
+.idea-body {
+  color: #939598;
+  line-height: 120%;
+  padding-bottom: 10px;
+}
+
+.idea-quality {
+  color: #6D6E71;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.idea-divider {
+  margin-top: 15px;
+  border: 1px solid #D1D3D4;
 }
