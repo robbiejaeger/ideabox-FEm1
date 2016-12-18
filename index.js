@@ -29,15 +29,22 @@ $(document).on('keyup', function(e){
 $saveBtn.on('click', function(e){
   e.preventDefault()
   var idea = constructIdeaFromUserInput()
+  addIdeaToStorage(idea)
   $ideasContainer.append(ideaTemplate(idea))
   clearInputs()
 })
+
+function addIdeaToStorage(idea){
+  var allIdeas = JSON.parse(localStorage.getItem('ideas'))
+  allIdeas.push(idea)
+  localStorage.setItem('ideas', JSON.stringify(allIdeas))
+}
 
 function constructIdeaFromUserInput(){
   return {title: $titleInput.val(),
           body: $bodyInput.val(),
           quality: 0,
-          id: Date.now()}
+          id: parseInt(Date.now())}
 }
 
 function ideaTemplate(idea){
