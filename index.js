@@ -35,9 +35,31 @@ $saveBtn.on('click', function(e){
 })
 
 function addIdeaToStorage(idea){
-  var allIdeas = JSON.parse(localStorage.getItem('ideas'))
+  var allIdeas = getIdeasArrayFromStorage()
   allIdeas.push(idea)
   localStorage.setItem('ideas', JSON.stringify(allIdeas))
+}
+
+function deleteIdeaFromStorage(ideaID){
+  var allIdeas = getIdeasArrayFromStorage()
+  var updatedIdeas = allIdeas.filter(function(idea){
+    return idea.id !== ideaID
+  })
+  localStorage.setItem('ideas', JSON.stringify(updatedIdeas))
+}
+
+function updateIdea(ideaId, propToUpdate, newPropVal){
+  var allIdeas = getIdeasArrayFromStorage()
+  allIdeas.forEach(function(idea){
+    if (idea.id === ideaId) {
+      idea[propToUpdate] = newPropVal
+    }
+  })
+  localStorage.setItem('ideas', JSON.stringify(allIdeas))
+}
+
+function getIdeasArrayFromStorage(){
+  return JSON.parse(localStorage.getItem('ideas'))
 }
 
 function constructIdeaFromUserInput(){
@@ -76,6 +98,8 @@ $allInputs.on('keyup', function(){
 
 $ideasContainer.on('click', '.delete-btn', function(){
   $(this).parents('.idea').remove()
+  var ideaId = $(this).parents('.idea').data('id')
+  deleteIdeaFromStorage(ideaId)
 })
 
 $ideasContainer.on('click', '.upvote-btn', upvote)
@@ -83,29 +107,35 @@ $ideasContainer.on('click', '.upvote-btn', upvote)
 $ideasContainer.on('click', '.downvote-btn', downvote)
 
 function upvote(){
+  var ideaId = $(this).parents('.idea').data('id')
   var $qualityEl = $(this).siblings('.idea-quality')
   var currentQuality = $qualityEl.data('quality')
 
   switch (currentQuality) {
     case 0:
       changeQuality($qualityEl, 1)
+      updateIdea(ideaId, 'quality', 1)
       break
     case 1:
       changeQuality($qualityEl, 2)
+      updateIdea(ideaId, 'quality', 2)
       break
   }
 }
 
 function downvote(){
+  var ideaId = $(this).parents('.idea').data('id')
   var $qualityEl = $(this).siblings('.idea-quality')
   var currentQuality = $qualityEl.data('quality')
 
   switch (currentQuality) {
     case 1:
       changeQuality($qualityEl, 0)
+      updateIdea(ideaId, 'quality', 0)
       break
     case 2:
       changeQuality($qualityEl, 1)
+      updateIdea(ideaId, 'quality', 1)
       break
   }
 }
