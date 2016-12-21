@@ -23,7 +23,7 @@ function loadIdeasFromStorage(ideas) {
   })
 }
 
-$(document).on('keyup', function(e){
+$('.idea-form').on('keyup', function(e){
   if (e.keycode === 13) $saveBtn.click()
 })
 
@@ -72,9 +72,9 @@ function constructIdeaFromUserInput(){
 
 function ideaTemplate(idea){
   return `<article class="idea" data-id="${idea.id}">
-    <h2>${idea.title}</h2>
+    <h2 contentEditable="true">${idea.title}</h2>
     <input class="delete-btn" type="button">
-    <p class="idea-body">${idea.body}</p>
+    <p class="idea-body" contentEditable="true">${idea.body}</p>
     <input class="vote-btn upvote-btn" type="button">
     <input class="vote-btn downvote-btn" type="button">
     <p class="idea-quality" data-quality="${idea.quality}">
@@ -116,6 +116,21 @@ $searchInput.on('keyup', function(){
     }
   })
 })
+
+$ideasContainer.on('focusout', 'h2', updateTitleText)
+$ideasContainer.on('focusout', '.idea-body', updateBodyText)
+
+function updateTitleText(){
+  var ideaId = $(this).parents('.idea').data('id')
+  var newTitle = $(this).text()
+  updateIdea(ideaId, "title", newTitle)
+}
+
+function updateBodyText(){
+  var ideaId = $(this).parents('.idea').data('id')
+  var newBody = $(this).text()
+  updateIdea(ideaId, "body", newBody)
+}
 
 $ideasContainer.on('click', '.upvote-btn', upvote)
 
