@@ -2,6 +2,7 @@ var $titleInput = $('#title-input')
 var $bodyInput = $('#body-input')
 var $allInputs = $('#title-input, #body-input')
 var $saveBtn = $('#save-btn')
+var $searchInput = $('#search-input')
 var $ideasContainer = $('.ideas-container')
 var ideaQualities = ['swill', 'plausible', 'genius']
 
@@ -100,6 +101,20 @@ $ideasContainer.on('click', '.delete-btn', function(){
   $(this).parents('.idea').remove()
   var ideaId = $(this).parents('.idea').data('id')
   deleteIdeaFromStorage(ideaId)
+})
+
+$searchInput.on('keyup', function(){
+  var query = $(this).val()
+
+  $.each($('.idea'), function(i, idea){
+    var textToQuery = $(idea).children('h2').text() + ' ' + $(idea).children('.idea-body').text()
+
+    if (textToQuery.indexOf(query) === -1) {
+      $(idea).hide()
+    } else {
+      $(idea).show()
+    }
+  })
 })
 
 $ideasContainer.on('click', '.upvote-btn', upvote)
