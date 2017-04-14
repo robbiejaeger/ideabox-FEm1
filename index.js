@@ -8,6 +8,11 @@ var ideaQualities = ['swill', 'plausible', 'genius']
 
 initializeIdeas()
 
+$ideasContainer.on('focusout', 'h2', updateTitleText)
+$ideasContainer.on('focusout', '.idea-body', updateBodyText)
+$ideasContainer.on('click', '.upvote-btn', upvote)
+$ideasContainer.on('click', '.downvote-btn', downvote)
+
 function initializeIdeas(){
   var ideas = JSON.parse(localStorage.getItem('ideas'))
   if (ideas === null) {
@@ -117,9 +122,6 @@ $searchInput.on('keyup', function(){
   })
 })
 
-$ideasContainer.on('focusout', 'h2', updateTitleText)
-$ideasContainer.on('focusout', '.idea-body', updateBodyText)
-
 function updateTitleText(){
   var ideaId = $(this).parents('.idea').data('id')
   var newTitle = $(this).text()
@@ -132,24 +134,14 @@ function updateBodyText(){
   updateIdea(ideaId, "body", newBody)
 }
 
-$ideasContainer.on('click', '.upvote-btn', upvote)
-
-$ideasContainer.on('click', '.downvote-btn', downvote)
-
 function upvote(){
   var ideaId = $(this).parents('.idea').data('id')
   var $qualityEl = $(this).siblings('.idea-quality')
   var currentQuality = $qualityEl.data('quality')
 
-  switch (currentQuality) {
-    case 0:
-      changeQuality($qualityEl, 1)
-      updateIdea(ideaId, 'quality', 1)
-      break
-    case 1:
-      changeQuality($qualityEl, 2)
-      updateIdea(ideaId, 'quality', 2)
-      break
+  if (ideaQualities[currentQuality + 1]) {
+    changeQuality($qualityEl, currentQuality + 1)
+    updateIdea(ideaId, 'quality', currentQuality + 1)
   }
 }
 
@@ -158,15 +150,9 @@ function downvote(){
   var $qualityEl = $(this).siblings('.idea-quality')
   var currentQuality = $qualityEl.data('quality')
 
-  switch (currentQuality) {
-    case 1:
-      changeQuality($qualityEl, 0)
-      updateIdea(ideaId, 'quality', 0)
-      break
-    case 2:
-      changeQuality($qualityEl, 1)
-      updateIdea(ideaId, 'quality', 1)
-      break
+  if (ideaQualities[currentQuality - 1]) {
+    changeQuality($qualityEl, currentQuality - 1)
+    updateIdea(ideaId, 'quality', currentQuality - 1)
   }
 }
 
