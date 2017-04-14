@@ -1,21 +1,19 @@
-var $titleInput = $('#title-input')
-var $bodyInput = $('#body-input')
-var $allInputs = $('#title-input, #body-input')
-var $saveBtn = $('#save-btn')
-var $searchInput = $('#search-input')
-var $ideasContainer = $('.ideas-container')
 var ideaQualities = ['swill', 'plausible', 'genius']
+
+$('.ideas-container').on('focusout', 'h2', updateTitleText)
+                     .on('focusout', '.idea-body', updateBodyText)
+                     .on('click', '.upvote-btn', upvote)
+                     .on('click', '.downvote-btn', downvote)
+                     .on('click', '.delete-btn', deleteIdea)
+$('.main-form').on('input', determineStateofSaveBtn)
+$('#save-btn').on('click', saveIdea)
+$('#search-input').on('input', queryIdeas)
 
 initializeIdeas()
 
-$ideasContainer.on('focusout', 'h2', updateTitleText)
-$ideasContainer.on('focusout', '.idea-body', updateBodyText)
-$ideasContainer.on('click', '.upvote-btn', upvote)
-$ideasContainer.on('click', '.downvote-btn', downvote)
-
 function initializeIdeas(){
   var ideas = JSON.parse(localStorage.getItem('ideas'))
-  if (ideas === null) {
+  if (!ideas) {
     localStorage.setItem('ideas', "[]")
   } else {
     loadIdeasFromStorage(ideas)
@@ -24,21 +22,18 @@ function initializeIdeas(){
 
 function loadIdeasFromStorage(ideas) {
   ideas.forEach(function(idea){
-    $ideasContainer.append(ideaTemplate(idea))
+    $('.ideas-container').append(ideaTemplate(idea))
   })
 }
 
-$('.idea-form').on('keyup', function(e){
-  if (e.keycode === 13) $saveBtn.click()
-})
-
-$saveBtn.on('click', function(e){
+function saveIdea(e){
   e.preventDefault()
   var idea = constructIdeaFromUserInput()
   addIdeaToStorage(idea)
-  $ideasContainer.append(ideaTemplate(idea))
+  $('.ideas-container').append(ideaTemplate(idea))
   clearInputs()
-})
+  determineStateofSaveBtn()
+}
 
 function addIdeaToStorage(idea){
   var allIdeas = getIdeasArrayFromStorage()
@@ -69,10 +64,10 @@ function getIdeasArrayFromStorage(){
 }
 
 function constructIdeaFromUserInput(){
-  return {title: $titleInput.val(),
-          body: $bodyInput.val(),
+  return {title: $('#title-input').val(),
+          body: $('#body-input').val(),
           quality: 0,
-          id: parseInt(Date.now())}
+          id: Date.now()}
 }
 
 function ideaTemplate(idea){
@@ -90,37 +85,35 @@ function ideaTemplate(idea){
 }
 
 function clearInputs(){
-  $titleInput.val('')
-  $bodyInput.val('')
+  $('#title-input').val('')
+  $('#body-input').val('')
 }
 
-$allInputs.on('keyup', function(){
-  if ($titleInput.val() !== "" && $bodyInput.val() !== "") {
-    $saveBtn.prop('disabled', false)
+function determineStateofSaveBtn(){
+  if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
+    $('#save-btn').prop('disabled', false)
   } else {
-    $saveBtn.prop('disabled', true)
+    $('#save-btn').prop('disabled', true)
   }
-})
+}
 
-$ideasContainer.on('click', '.delete-btn', function(){
+function deleteIdea(){
   $(this).parents('.idea').remove()
   var ideaId = $(this).parents('.idea').data('id')
   deleteIdeaFromStorage(ideaId)
-})
+}
 
-$searchInput.on('keyup', function(){
+function queryIdeas(){
   var query = $(this).val()
-
-  $.each($('.idea'), function(i, idea){
-    var textToQuery = $(idea).children('h2').text() + ' ' + $(idea).children('.idea-body').text()
-
+  $('.idea').each(function(i, idea){
+    var textToQuery = $(idea).children('h3').text() + ' ' + $(idea).children('.idea-body').text()
     if (textToQuery.indexOf(query) === -1) {
       $(idea).hide()
     } else {
       $(idea).show()
     }
   })
-})
+}
 
 function updateTitleText(){
   var ideaId = $(this).parents('.idea').data('id')
