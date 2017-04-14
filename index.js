@@ -72,11 +72,11 @@ function constructIdeaFromUserInput(){
 
 function ideaTemplate(idea){
   return `<article class="idea" data-id="${idea.id}">
-    <h2 contentEditable="true">${idea.title}</h2>
-    <input class="delete-btn" type="button">
+    <h3 contentEditable="true">${idea.title}</h3>
+    <input class="item-btn delete-btn" type="button">
     <p class="idea-body" contentEditable="true">${idea.body}</p>
-    <input class="vote-btn upvote-btn" type="button">
-    <input class="vote-btn downvote-btn" type="button">
+    <input class="item-btn upvote-btn" type="button">
+    <input class="item-btn downvote-btn" type="button">
     <p class="idea-quality" data-quality="${idea.quality}">
       quality: <span class="quality-val-text">${ideaQualities[idea.quality]}</span>
     </p>
