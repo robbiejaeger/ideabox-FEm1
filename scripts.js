@@ -1,6 +1,6 @@
 var ideaQualities = ['swill', 'plausible', 'genius']
 
-$('.ideas-container').on('focusout', 'h2', updateTitleText)
+$('.ideas-container').on('focusout', 'h3', updateTitleText)
                      .on('focusout', '.idea-body', updateBodyText)
                      .on('click', '.upvote-btn', upvote)
                      .on('click', '.downvote-btn', downvote)
@@ -49,7 +49,7 @@ function deleteIdeaFromStorage(ideaID){
   localStorage.setItem('ideas', JSON.stringify(updatedIdeas))
 }
 
-function updateIdea(ideaId, propToUpdate, newPropVal){
+function updateIdeaInStorage(ideaId, propToUpdate, newPropVal){
   var allIdeas = getIdeasArrayFromStorage()
   allIdeas.forEach(function(idea){
     if (idea.id === ideaId) {
@@ -118,13 +118,13 @@ function queryIdeas(){
 function updateTitleText(){
   var ideaId = $(this).parents('.idea').data('id')
   var newTitle = $(this).text()
-  updateIdea(ideaId, "title", newTitle)
+  updateIdeaInStorage(ideaId, "title", newTitle)
 }
 
 function updateBodyText(){
   var ideaId = $(this).parents('.idea').data('id')
   var newBody = $(this).text()
-  updateIdea(ideaId, "body", newBody)
+  updateIdeaInStorage(ideaId, "body", newBody)
 }
 
 function upvote(){
@@ -134,7 +134,7 @@ function upvote(){
 
   if (ideaQualities[currentQuality + 1]) {
     changeQuality($qualityEl, currentQuality + 1)
-    updateIdea(ideaId, 'quality', currentQuality + 1)
+    updateIdeaInStorage(ideaId, 'quality', currentQuality + 1)
   }
 }
 
@@ -145,7 +145,7 @@ function downvote(){
 
   if (ideaQualities[currentQuality - 1]) {
     changeQuality($qualityEl, currentQuality - 1)
-    updateIdea(ideaId, 'quality', currentQuality - 1)
+    updateIdeaInStorage(ideaId, 'quality', currentQuality - 1)
   }
 }
 
